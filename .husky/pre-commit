@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Exit if in production
+# More specifically, most Continuous Integration Servers set a CI environment variable. 
+# The following detects if this script is running in a CI, early exit 
+[ -n "$CI" ] && exit 0
+
+# Grab current name of branch
+LOCAL_BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
+
+# Branch name regex match
+VALID_BRANCH_REGEX='^((bug|docs|fix|feat|merge|test|wip)\/[a-zA-Z0-9\-]+)$'
+
+ERROR_MSG="\n${Red}There is something wrong with your branch name.\nBranch names must adhere to this contract:${Color_Off}\n\n${Yellow}$VALID_BRANCH_REGEX\n\n${Red}Due to this conflict, your commit has been rejected. Please rename your branch to a valid name and try again.${Color_Off}"
+
+FIX_MSG="${Yellow}You can rename your current working branch with:\ngit branch --move \$OLD_NAME \$NEW_NAME\ngit push --set-upstream \$REMOTE \$NEW_NAME\ngit branch -a\n\nAnd then remove the old branch on remote:\ngit push \$REMOTE --delete \$OLD_NAME\n${Color_Off}"
+
+# Rejects commit if current branch name does not match regex pattern
+if [[ ! $LOCAL_BRANCH_NAME =~ $VALID_BRANCH_REGEX ]]; then
+    # Print error
+    echo "$ERROR_MSG\n\n"
+    # Optional: Error fix suggestion
+    echo "$FIX_MSG"
+    # Abort commit
+    exit 1
+fi
+
+exit 0
