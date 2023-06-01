@@ -37,8 +37,8 @@ app.use((err, req, res, next) => {
   res.status(500).send({ err: { message: err.message } });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-module.exports = app;
+module.exports = server;
