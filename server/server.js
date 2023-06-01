@@ -5,10 +5,9 @@ const authRouter = require('./routes/authRouter');
 const notesRouter = require('./routes/notesRouter');
 const connectDB = require('./db.js');
 
-// connectDB();
+connectDB();
 
-// Our server port
-const PORT = 8888;
+const PORT = process.env.PORT || 8888;
 
 // Create an express app
 const app = express();
@@ -24,6 +23,14 @@ app.use('/auth', authRouter);
 
 // Send all notes urls to notesRouter
 app.use('/notes', notesRouter);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/dist')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'dist', 'index.html')),
+  );
+}
 
 // 404 handler
 app.use('*', (req, res) => {
