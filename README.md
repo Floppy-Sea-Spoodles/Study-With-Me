@@ -68,3 +68,11 @@ TODO:
 - App.jsx: Ducky will overpower any existing widget in position (as it should?
   but maybe not?) 🤷‍♀️
 - Feature to add resources
+
+## Heroku To Do:
+
+- Resources > Add `web`: `node server/server.js` dyno
+- Settings > Config Vars:
+  - MONGO_URI
+  - PORT
+  - NODE_ENV
