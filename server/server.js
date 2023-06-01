@@ -1,7 +1,6 @@
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
-const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const authRouter = require('./routes/authRouter');
 const notesRouter = require('./routes/notesRouter');
@@ -19,6 +18,7 @@ app.use(express.json());
 
 // HTTP Request Logging
 if (process.env.NODE_ENV === 'development') {
+  const morgan = require('morgan');
   app.use(morgan('dev'));
 }
 
