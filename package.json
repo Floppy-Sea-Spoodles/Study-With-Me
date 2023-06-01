@@ -12,7 +12,7 @@
     "dev": "webpack-dev-server --mode development --open --hot",
     "serve:dev": "webpack-dev-server --mode development --open --hot & nodemon server/server.js",
     "prepare": "husky install && bash -c 'chmod ug+x .husky/*'",
-    "heroku-deploy": "git commit -m ':rocket: PROD DEPLOY TO HEROKU' && git push heroku master",
+    "heroku-deploy": "git commit -m ':rocket: PROD DEPLOY TO HEROKU' && git push heroku main",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
   "keywords": [],
@@ -40,6 +40,7 @@
     "husky": "^8.0.0",
     "jest": "^29.5.0",
     "mongodb-memory-server": "^8.12.2",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
     "sass": "^1.62.1",

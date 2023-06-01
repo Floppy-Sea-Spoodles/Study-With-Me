@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
+const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const authRouter = require('./routes/authRouter');
 const notesRouter = require('./routes/notesRouter');
@@ -16,6 +17,11 @@ const app = express();
 // Format JSON into readable code
 app.use(express.json());
 
+// HTTP Request Logging
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 // Parse cookies
 app.use(cookieParser());
 
@@ -29,8 +35,17 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../dist')));
 
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'dist', 'index.html')),
+    res.sendFile(path.resolve(__dirname, '../dist', 'index.html')),
   );
+} else {
+  app.use(express.static(path.join(__dirname, '../client/src')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, '../client/src/', 'index.html')),
+  );
+  // app.get('/', (req, res) => {
+  //   res.send('API running :)');
+  // });
 }
 
 // 404 handler
