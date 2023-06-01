@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const authRouter = require('./routes/authRouter');
@@ -25,7 +26,7 @@ app.use('/auth', authRouter);
 app.use('/notes', notesRouter);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/dist')));
+  app.use(express.static(path.join(__dirname, '../dist')));
 
   app.get('*', (req, res) =>
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html')),
