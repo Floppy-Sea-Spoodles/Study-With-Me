@@ -39,6 +39,7 @@ body {
 }
 
 .loginContainer {
+  position: relative;
   display: flex;
   padding: 2rem;
   background-color: #fcfcfcc5;
@@ -69,6 +70,25 @@ body {
       font-size: 22px;
       font-weight: 200;
     }
+  }
+  #ducky_image {
+    position: absolute;
+    z-index: -1;
+    top: -150px;
+    left: 60px;
+    animation: floating 3s infinite ease-in-out;
+  }
+}
+
+@keyframes floating {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 20px);
+  }
+  100% {
+    transform: translate(0, -0px);
   }
 }
 
