@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './assets/App.scss';
 
-function Notepad({ totalNotes, setTotalNotes, savedNote }) {
+function Notepad({ totalNotes, setTotalNotes, savedNote, setSavedNote }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+
+  // tell this component to update (title, content) when `savedNote` changes
+  useEffect(() => {
+    if (savedNote) {
+      setTitle(savedNote.title);
+      setContent(savedNote.content);
+    }
+  }, [savedNote]);
 
   const saveNote = async () => {
     try {
@@ -20,42 +28,70 @@ function Notepad({ totalNotes, setTotalNotes, savedNote }) {
       });
 
       const newNote = await response.json();
-      console.log('newNote in notepad', newNote);
-      // Update state (located in MainContainer)
       setTotalNotes([...totalNotes, newNote]); //update totalNotes to the newer version
-
-      console.log('Created a new note.');
     } catch (err) {
       console.error(err);
     }
   };
-  console.log('totalNotes after save button click', totalNotes);
-  console.log(savedNote);
 
-  // create function to handle sending a patch request to update note
-  // also update state
+  const updateNote = async () => {
+    // PATCH /notes/:id
+    try {
+      const response = await fetch(`/notes/${savedNote._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          content,
+        }),
+      });
+      const updatedNote = await response.json();
 
-  // create function to handle deleting a note from both db and state
+      // Find the element in totalNotes where _id is equal to the _id to the updatedNote
+      // and replace that element with the updatedNote
+      const newTotalNotes = structuredClone(totalNotes);
+      const index = newTotalNotes.findIndex(e => e._id === updatedNote._id);
+      newTotalNotes[index] = updatedNote;
+      setTotalNotes(newTotalNotes);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  // create onclick handler for delete and cancel buttons to reset
-  // displayed title / content to this component's state
+  // Delete a note by note id
+  const deleteNote = async () => {
+    try {
+      const response = await fetch(`/notes/${savedNote._id}`, {
+        method: 'DELETE',
+      });
+      const deletedNote = await response.json();
 
-  let saved = savedNote;
-  let displayedTitle = title;
-  let displayedContent = content;
-  if (saved) {
-    displayedTitle = saved.title;
-    displayedContent = saved.content;
-  }
+      const newTotalNotes = structuredClone(totalNotes);
+      const index = newTotalNotes.findIndex(e => e._id === deletedNote._id);
+      newTotalNotes.splice(index, 1);
+      setTotalNotes(newTotalNotes);
 
-  console.log('saved in Notepad: ', saved);
+      createNewNote();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const createNewNote = async () => {
+    setSavedNote();
+    setTitle('');
+    setContent('');
+  };
+
   return (
     <div className='note'>
       <input
         id='noteTitle'
         type='text'
         placeholder='Note Title'
-        value={displayedTitle}
+        value={title}
         onChange={e => setTitle(e.target.value)}
         required
       ></input>
@@ -65,34 +101,21 @@ function Notepad({ totalNotes, setTotalNotes, savedNote }) {
         placeholder='Jot some notes!'
         rows='44'
         cols='54'
-        value={displayedContent}
+        value={content}
         onChange={e => setContent(e.target.value)}
         required
       ></textarea>
-      <button onClick={saveNote}>save</button>
-    </div>
 
-    // <div className='note'>
-    // <input
-    //   id='noteTitle'
-    //   type='text'
-    //   placeholder='Note Title'
-    //   value={title}
-    //   onChange={e => setTitle(e.target.value)}
-    //   required
-    // ></input>
-    // <textarea
-    //   id='noteBody'
-    //   type='text'
-    //   placeholder='Jot some notes!'
-    //   rows='44'
-    //   cols='54'
-    //   value={content}
-    //   onChange={e => setContent(e.target.value)}
-    //   required
-    // ></textarea>
-    // <button onClick={saveNote}>save</button>
-    // </div>
+      {savedNote?._id ? (
+        <>
+          <button onClick={updateNote}>Update</button>
+          <button onClick={deleteNote}>Delete</button>
+          <button onClick={createNewNote}>Create New Note</button>
+        </>
+      ) : (
+        <button onClick={saveNote}>save</button>
+      )}
+    </div>
   );
 }
 

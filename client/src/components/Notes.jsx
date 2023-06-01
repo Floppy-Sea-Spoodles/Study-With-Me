@@ -6,7 +6,6 @@ function Notes({ totalNotes, setSavedNote }) {
 
   // create handler for click of a note
   const handleClick = note => {
-    console.log(`${note.title} clicked!`);
     setSavedNote(note);
   };
 

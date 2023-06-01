@@ -14,7 +14,7 @@ function MainContainer() {
   const [notes, addNote] = useState([]);
 
   // State to keep:
-  const [savedNote, setSavedNote] = useState({ title: '', content: '' });
+  const [savedNote, setSavedNote] = useState();
   const [totalNotes, setTotalNotes] = useState([]);
   const [username, setUsername] = useState('');
 

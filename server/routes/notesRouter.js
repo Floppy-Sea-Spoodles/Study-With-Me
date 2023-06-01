@@ -26,11 +26,11 @@ router.post('/display', notesController.getNote, (req, res) => {
   res.status(200).json(res.locals.note);
 });
 
-router.patch('/update', notesController.updateNote, (req, res) => {
-  res.status(200).json(res.locals.update);
+router.patch('/:id', notesController.updateNote, (req, res) => {
+  res.status(200).json(res.locals.updatedNote);
 });
 
-router.delete('/delete', notesController.deleteNote, (req, res) => {
+router.delete('/:id', notesController.deleteNote, (req, res) => {
   res.status(200).json(res.locals.deletedNote);
 });
 

@@ -79,17 +79,15 @@ notesController.updateNote = async (req, res, next) => {
   // there should be a check here to make sure the logged in user is the only one able to update their note
   // will have to wait until sessions are implemented
   try {
-    const { note_id, content: newContent, title: newTitle } = req.body;
+    const { id } = req.params; // path is /notes/:id
+    const { title, content } = req.body;
 
     const updatedNote = await Notes.findOneAndUpdate(
-      { _id: note_id },
-      { title: newTitle, content: newContent },
+      { _id: id },
+      { title, content },
       { new: true },
     );
-
-    res.locals.update = updatedNote;
-    // Persist data to res.locals
-    // Invoke next middleware
+    res.locals.updatedNote = updatedNote;
     return next();
   } catch (err) {
     next(err);
@@ -98,16 +96,13 @@ notesController.updateNote = async (req, res, next) => {
 
 notesController.deleteNote = async (req, res, next) => {
   try {
-    const { note_id } = req.body;
+    const { id } = req.params;
 
     // Find and delete the note by its ID
-    const deletedNote = await Notes.findOneAndDelete({ _id: note_id });
+    const deletedNote = await Notes.findOneAndDelete({ _id: id });
 
     if (!deletedNote) {
-      return next({
-        log: 'Note not found',
-        message: { error: 'Note not found' },
-      });
+      throw new Error('Could not find a note to delete');
     }
 
     res.locals.deletedNote = deletedNote;
