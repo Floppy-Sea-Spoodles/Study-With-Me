@@ -8,7 +8,8 @@ const connectDB = require('./db.js');
 
 connectDB();
 
-const PORT = process.env.PORT || 8888;
+// Our server port
+const PORT = 1234;
 
 // Create an express app
 const app = express();
