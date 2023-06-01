@@ -16,12 +16,6 @@ const app = express();
 // Format JSON into readable code
 app.use(express.json());
 
-// HTTP Request Logging
-if (process.env.NODE_ENV === 'development') {
-  const morgan = require('morgan');
-  app.use(morgan('dev'));
-}
-
 // Parse cookies
 app.use(cookieParser());
 
