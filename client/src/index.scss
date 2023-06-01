@@ -226,7 +226,7 @@ hr {
 }
 
 #layout {
-  height: 100%;
+  min-height: 90vh;
   padding: 0.5rem;
   display: flex;
   flex-direction: row;
@@ -363,7 +363,7 @@ hr {
     font-size: 16px;
   }
   #noteBody {
-    height: 300px;
+    height: 500px;
     resize: vertical;
   }
   button {
