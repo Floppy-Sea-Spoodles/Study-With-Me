@@ -37,9 +37,6 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) =>
     res.sendFile(path.resolve(__dirname, '../client/src/', 'index.html')),
   );
-  // app.get('/', (req, res) => {
-  //   res.send('API running :)');
-  // });
 }
 
 // 404 handler
