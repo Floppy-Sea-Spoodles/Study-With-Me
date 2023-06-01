@@ -57,6 +57,7 @@ function LoginComponent() {
     <div className='loginPadding'>
       <div className='loginContainer loginContainerBorder'>
         <form onSubmit={e => e.preventDefault()}>
+          <h3>Study With Ducky</h3>
           <label htmlFor='username'>
             <p>Username:</p>
             <input
@@ -95,8 +96,8 @@ function LoginComponent() {
               Create Account
             </button>
           </div>
+          <span>{errorMessage}</span>
         </form>
-        <span>{errorMessage}</span>
       </div>
       <div className='waveBackground' />
     </div>

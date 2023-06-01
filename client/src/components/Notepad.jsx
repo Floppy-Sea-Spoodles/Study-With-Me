@@ -99,8 +99,8 @@ function Notepad({ totalNotes, setTotalNotes, savedNote, setSavedNote }) {
         id='noteBody'
         type='text'
         placeholder='Jot some notes!'
-        rows='44'
-        cols='54'
+        // rows='44'
+        // cols='54'
         value={content}
         onChange={e => setContent(e.target.value)}
         required
