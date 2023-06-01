@@ -12,7 +12,7 @@
     "dev": "webpack-dev-server --mode development --open --hot",
     "serve:dev": "webpack-dev-server --mode development --open --hot & nodemon server/server.js",
     "prepare": "husky install && bash -c 'chmod ug+x .husky/*'",
-    "heroku-deploy": "git commit -m ':rocket: PROD DEPLOY TO HEROKU' && git push heroku main",
+    "heroku-deploy": "git push heroku $(git rev-parse --abbrev-ref HEAD):main",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
   "keywords": [],
