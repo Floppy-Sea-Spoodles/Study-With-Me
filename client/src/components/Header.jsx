@@ -4,7 +4,7 @@ const Header = ({ username, setShowCustomizationModal }) => {
   return (
     <header>
       <div id='hero'>
-        <p>Study With Me</p>
+        <p>Study With Ducky</p>
       </div>
       <div id='user'>
         <p>{username}</p>

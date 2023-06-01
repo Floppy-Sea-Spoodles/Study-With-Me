@@ -63,6 +63,11 @@ const Resources = ({ handleResourceClick }) => {
           </li>
         </ul>
       </div>
+      <img
+        id='ducky_image'
+        src='https://www.pngarts.com/files/4/Rubber-Duck-Transparent-Images.png'
+        alt='lucky ducky'
+      />
     </div>
   );
 };

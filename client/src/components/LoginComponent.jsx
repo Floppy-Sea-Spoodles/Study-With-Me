@@ -56,7 +56,13 @@ function LoginComponent() {
   return (
     <div className='loginPadding'>
       <div className='loginContainer loginContainerBorder'>
+        <img
+          id='ducky_image'
+          src='https://www.pngarts.com/files/4/Rubber-Duck-Transparent-Images.png'
+          alt='lucky ducky'
+        />
         <form onSubmit={e => e.preventDefault()}>
+          <h3>Study With Ducky</h3>
           <label htmlFor='username'>
             <p>Username:</p>
             <input
@@ -95,8 +101,8 @@ function LoginComponent() {
               Create Account
             </button>
           </div>
+          <span>{errorMessage}</span>
         </form>
-        <span>{errorMessage}</span>
       </div>
       <div className='waveBackground' />
     </div>
